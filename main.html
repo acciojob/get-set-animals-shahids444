@@ -128,37 +128,42 @@
                 this._species = species;
             }
 
-            // Getter for species
             get species() {
                 return this._species;
             }
 
-            // Method to make a sound
             makeSound() {
-                const message = `The ${this._species} makes a sound`;
-                console.log(message);
-                logToConsole(message);
+                console.log(`The ${this._species} makes a sound`);
+                logToConsole(`The ${this._species} makes a sound`);
             }
         }
 
         // Cat class extending Animal
         class Cat extends Animal {
-            // Method specific to cats
             purr() {
-                const message = 'purr';
-                console.log(message);
-                logToConsole(message);
+                console.log('purr');
+                logToConsole('purr');
             }
         }
 
         // Dog class extending Animal
         class Dog extends Animal {
-            // Method specific to dogs
             bark() {
-                const message = 'woof';
-                console.log(message);
-                logToConsole(message);
+                console.log('woof');
+                logToConsole('woof');
             }
+        }
+
+        // Export classes if needed for testing
+        if (typeof module !== 'undefined' && module.exports) {
+            module.exports = { Animal, Cat, Dog };
+        }
+
+        // Make classes available globally for browser testing
+        if (typeof window !== 'undefined') {
+            window.Animal = Animal;
+            window.Cat = Cat;
+            window.Dog = Dog;
         }
 
         // Global instances
