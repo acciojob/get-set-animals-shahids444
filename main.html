@@ -1,54 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Get Set Animals 🐾</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐾 Get Set Animals - Class Hierarchy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .demo-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+        
+        .demo-section h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background: #0056b3;
+        }
+        
+        .console-output {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            min-height: 100px;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+        
+        .clear-btn {
+            background: #dc3545;
+        }
+        
+        .clear-btn:hover {
+            background: #c82333;
+        }
+        
+        .animal-info {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
 </head>
 <body>
-  <h1>🐾 Get Set Animals - Open Console to See Output</h1>
-  <script>
-    // Base Animal class
-    class Animal {
-      constructor(species) {
-        this._species = species;
-      }
+    <div class="container">
+        <h1>🐾 Get Set Animals - Class Hierarchy Demo</h1>
+        
+        <div class="demo-section">
+            <h3>🐱 Cat Demo</h3>
+            <button onclick="createCat()">Create Siamese Cat</button>
+            <button onclick="catMakeSound()">Cat Make Sound</button>
+            <button onclick="catPurr()">Cat Purr</button>
+            <button onclick="getCatSpecies()">Get Cat Species</button>
+            
+            <div id="cat-info" class="animal-info" style="display:none;">
+                <strong>Cat Instance:</strong> <span id="cat-species"></span>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h3>🐕 Dog Demo</h3>
+            <button onclick="createDog()">Create Golden Retriever Dog</button>
+            <button onclick="dogMakeSound()">Dog Make Sound</button>
+            <button onclick="dogBark()">Dog Bark</button>
+            <button onclick="getDogSpecies()">Get Dog Species</button>
+            
+            <div id="dog-info" class="animal-info" style="display:none;">
+                <strong>Dog Instance:</strong> <span id="dog-species"></span>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h3>🧪 Run All Tests</h3>
+            <button onclick="runAllTests()">Execute All Test Cases</button>
+            <button onclick="clearConsole()" class="clear-btn">Clear Console</button>
+        </div>
+        
+        <div class="console-output" id="console-output">
+            <div>Console output will appear here...</div>
+        </div>
+    </div>
 
-      get species() {
-        return this._species;
-      }
+    <script>
+        // Animal base class
+        class Animal {
+            constructor(species) {
+                this._species = species;
+            }
 
-      makeSound() {
-        console.log(`The ${this._species} makes a sound`);
-      }
-    }
+            // Getter for species
+            get species() {
+                return this._species;
+            }
 
-    // Cat subclass
-    class Cat extends Animal {
-      purr() {
-        console.log("purr");
-      }
-    }
+            // Method to make a sound
+            makeSound() {
+                const message = `The ${this._species} makes a sound`;
+                console.log(message);
+                logToConsole(message);
+            }
+        }
 
-    // Dog subclass
-    class Dog extends Animal {
-      bark() {
-        console.log("woof");
-      }
-    }
+        // Cat class extending Animal
+        class Cat extends Animal {
+            // Method specific to cats
+            purr() {
+                const message = 'purr';
+                console.log(message);
+                logToConsole(message);
+            }
+        }
 
-    // ✅ Testing the Cat class
-    const myCat = new Cat("Siamese");
-    myCat.makeSound(); // Expected: The Siamese makes a sound
-    myCat.purr();      // Expected: purr
+        // Dog class extending Animal
+        class Dog extends Animal {
+            // Method specific to dogs
+            bark() {
+                const message = 'woof';
+                console.log(message);
+                logToConsole(message);
+            }
+        }
 
-    // ✅ Testing the Dog class
-    const myDog = new Dog("Golden Retriever");
-    myDog.makeSound(); // Expected: The Golden Retriever makes a sound
-    myDog.bark();      // Expected: woof
+        // Global instances
+        let myCat = null;
+        let myDog = null;
 
-    // Optional: Check the species getter
-    console.log("Cat species is:", myCat.species); // Siamese
-    console.log("Dog species is:", myDog.species); // Golden Retriever
-  </script>
+        // Helper function to log to our custom console
+        function logToConsole(message) {
+            const consoleOutput = document.getElementById('console-output');
+            const timestamp = new Date().toLocaleTimeString();
+            consoleOutput.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        // Cat functions
+        function createCat() {
+            myCat = new Cat("Siamese");
+            document.getElementById('cat-info').style.display = 'block';
+            document.getElementById('cat-species').textContent = myCat.species;
+            logToConsole('✅ Created Siamese Cat instance');
+        }
+
+        function catMakeSound() {
+            if (!myCat) {
+                logToConsole('❌ Please create a cat first!');
+                return;
+            }
+            myCat.makeSound();
+        }
+
+        function catPurr() {
+            if (!myCat) {
+                logToConsole('❌ Please create a cat first!');
+                return;
+            }
+            myCat.purr();
+        }
+
+        function getCatSpecies() {
+            if (!myCat) {
+                logToConsole('❌ Please create a cat first!');
+                return;
+            }
+            logToConsole(`Cat species: ${myCat.species}`);
+        }
+
+        // Dog functions
+        function createDog() {
+            myDog = new Dog("Golden Retriever");
+            document.getElementById('dog-info').style.display = 'block';
+            document.getElementById('dog-species').textContent = myDog.species;
+            logToConsole('✅ Created Golden Retriever Dog instance');
+        }
+
+        function dogMakeSound() {
+            if (!myDog) {
+                logToConsole('❌ Please create a dog first!');
+                return;
+            }
+            myDog.makeSound();
+        }
+
+        function dogBark() {
+            if (!myDog) {
+                logToConsole('❌ Please create a dog first!');
+                return;
+            }
+            myDog.bark();
+        }
+
+        function getDogSpecies() {
+            if (!myDog) {
+                logToConsole('❌ Please create a dog first!');
+                return;
+            }
+            logToConsole(`Dog species: ${myDog.species}`);
+        }
+
+        // Test function
+        function runAllTests() {
+            logToConsole('🧪 Running all test cases...');
+            logToConsole('');
+
+            // Test 1: Cat tests
+            logToConsole('=== CAT TESTS ===');
+            const testCat = new Cat("Siamese");
+            testCat.makeSound();
+            testCat.purr();
+            logToConsole(`Species getter test: ${testCat.species}`);
+            logToConsole('');
+
+            // Test 2: Dog tests
+            logToConsole('=== DOG TESTS ===');
+            const testDog = new Dog("Golden Retriever");
+            testDog.makeSound();
+            testDog.bark();
+            logToConsole(`Species getter test: ${testDog.species}`);
+            logToConsole('');
+
+            logToConsole('✅ All tests completed!');
+        }
+
+        function clearConsole() {
+            document.getElementById('console-output').innerHTML = '<div>Console cleared...</div>';
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            logToConsole('🐾 Animal Class Hierarchy Demo loaded!');
+            logToConsole('Click the buttons above to test the functionality.');
+        };
+    </script>
 </body>
 </html>
